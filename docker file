@@ -8,3 +8,15 @@ RUN pip install -r requirements.txt
 COPY src/ /app
 
 CMD ["python", "app.py"]
+apiVersion: v1
+kind: Service
+metadata:
+  name: wiscow-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: wiscow
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
