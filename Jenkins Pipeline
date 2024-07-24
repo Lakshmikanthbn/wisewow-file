@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    def app = docker.build("wiscow")
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    def app = docker.build("wiscow")
+                    app.inside {
+                        sh 'pip install -r requirements.txt'
+                        sh 'python -m unittest discover'
+                    }
+                }
+            }
+        }
+
+        stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        def app = docker.build("wiscow")
+                        app.push("${env.BUILD_ID}")
+                        app.push("latest")
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    kubernetesDeploy(configs: 'k8s/*.yaml', kubeconfigId: 'kubeconfig')
+                }
+            }
+        }
+    }
+}
