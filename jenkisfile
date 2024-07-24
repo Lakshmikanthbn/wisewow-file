@@ -1,0 +1,17 @@
+### Final Steps
+
+1. **Initialize Git Repository**:
+    ```sh
+    git init
+    git add .
+    git commit -m "Initial commit"
+    git branch -M main
+    git remote add origin <your-github-repo-url>
+    git push -u origin main
+    ```
+
+2. **Set Up Docker Hub**: Ensure you have a Docker Hub account and replace `<your-docker-hub-username>` in the Kubernetes deployment file and Jenkinsfile.
+
+3. **Set Up Jenkins**: Ensure Jenkins has Docker and Kubernetes plugins installed, and you have configured credentials for Docker Hub and Kubernetes.
+
+By following these steps, you will have a complete project showcasing your skills in setting up a CI/CD pipeline with Jenkins, Docker, and Kubernetes. Upload this project to GitHub, and you're all set!
